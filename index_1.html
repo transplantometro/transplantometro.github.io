@@ -9,16 +9,14 @@
   <style>
     html { scroll-behavior: smooth; }
 
-    /* FUNDO GERAL DO SITE */
+    /* COR DE FUNDO DO SITE */
     body {
-      background-color: rgb(204, 204, 204) !important;
-      color: #0f172a; /* slate-900 */
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: rgb(0, 204, 0); /* fundo verde 204 */
     }
 
-    /* CABEÇALHO SEMPRE BRANCO */
+    /* COR DO CABEÇALHO */
     header {
-      background-color: rgb(255, 255, 255) !important;
+      background-color: rgb(0, 0, 255); /* azul */
     }
 
     .odometer-number {
@@ -27,10 +25,11 @@
   </style>
 </head>
 
-<body>
+<!-- tirei o bg-slate-50 daqui -->
+<body class="text-slate-900">
 
   <!-- ==========================
-       DADOS
+       CONFIG DOS DADOS
   =========================== -->
   <script>
     const TRANSPLANT_DATA = {
@@ -100,17 +99,15 @@
   </script>
 
   <!-- ==========================
-       CABEÇALHO (BRANCO)
+       HEADER
   =========================== -->
   <header class="border-b border-slate-300 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-800">
           Transplantômetro Brasil
         </h1>
-        <p class="text-sm text-slate-600">
-          Painel público sobre fila de transplantes e doação de órgãos
-        </p>
+        <p class="text-sm text-slate-600">Painel público sobre fila de transplantes</p>
       </div>
 
       <nav class="hidden md:flex gap-4 text-sm text-slate-600">
@@ -122,162 +119,107 @@
   </header>
 
   <!-- ==========================
-       HERO (FUNDO = COR DO SITE)
+       HERO
   =========================== -->
-  <section>
-    <div class="max-w-6xl mx-auto px-4 py-8">
-      <div class="bg-white rounded-2xl border border-slate-300 shadow-sm p-6">
-        <h2 class="text-2xl md:text-3xl font-semibold text-slate-900 mb-3">
-          Números que contam histórias de vida
-        </h2>
-        <p class="text-slate-800 text-sm md:text-base mb-2">
-          Este painel apresenta, de forma simples, alguns indicadores da fila de transplantes
-          e da doação de órgãos no Brasil. Cada número representa pessoas, famílias e decisões
-          tomadas em momentos difíceis.
-        </p>
-        <p class="text-slate-800 text-sm md:text-base">
-          O objetivo é estimular a conversa sobre doação em família e mostrar o impacto da
-          autorização familiar na vida de quem espera um órgão.
-        </p>
-      </div>
+  <section class="bg-gradient-to-br from-emerald-50 to-sky-50 border-b border-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-800 mb-3">
+        Números que contam histórias de vida
+      </h2>
+      <p class="text-slate-800 max-w-2xl">
+        Este painel apresenta, de forma simples, indicadores da doação de órgãos no Brasil.
+        Cada número representa pessoas, famílias e decisões difíceis — e mostra a importância
+        da conversa sobre doação.
+      </p>
     </div>
   </section>
 
   <!-- ==========================
-       PAINEL PRINCIPAL
+       PAINEL
   =========================== -->
-  <main id="painel" class="max-w-6xl mx-auto px-4 py-4 pb-10 space-y-8">
+  <main id="painel" class="max-w-6xl mx-auto px-4 py-10">
 
     <!-- CARDS -->
-    <section>
-      <h3 class="text-lg md:text-xl font-semibold text-slate-900 mb-3">
-        Visão geral dos transplantes em <span id="ano-atual"></span>
-      </h3>
-      <div class="grid gap-4 md:grid-cols-4">
+    <div class="grid gap-4 md:grid-cols-4">
 
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-300 p-4">
-          <p class="text-xs text-slate-600 uppercase font-medium">Transplantes no ano</p>
-          <p id="total-ano" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-300 p-4">
-          <p class="text-xs text-slate-600 uppercase font-medium">Potenciais doadores no ano</p>
-          <p id="potenciais-doadores" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-300 p-4">
-          <p class="text-xs text-slate-600 uppercase font-medium">Doadores efetivos</p>
-          <p id="doadores-efetivos" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-300 p-4">
-          <p class="text-xs text-slate-600 uppercase font-medium">Taxa de recusa familiar</p>
-          <p id="taxa-recusa" class="mt-2 text-3xl font-semibold text-slate-900">0 %</p>
-        </div>
-
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Transplantes no ano</p>
+        <p id="total-ano" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
       </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Potenciais doadores no ano</p>
+        <p id="potenciais-doadores" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Doadores efetivos</p>
+        <p id="doadores-efetivos" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Taxa de recusa familiar</p>
+        <p id="taxa-recusa" class="mt-2 text-3xl font-semibold text-slate-900">0 %</p>
+      </div>
+
+    </div>
+
+    <!-- Tabela -->
+    <section class="mt-10 bg-white rounded-2xl shadow border border-slate-300 p-4">
+      <h3 class="text-xl font-semibold text-slate-800 mb-3">Pessoas na fila por órgão</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="bg-slate-100 border-b border-slate-300">
+            <th class="px-3 py-2 text-left font-semibold text-slate-700">Órgão</th>
+            <th class="px-3 py-2 text-left font-semibold text-slate-700">Pessoas na fila</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-orgaos"></tbody>
+      </table>
     </section>
 
-    <!-- TABELA POR ÓRGÃO -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-300 p-4 md:p-6">
-      <h3 class="text-lg md:text-xl font-semibold text-slate-900 mb-3">
-        Pessoas na fila por órgão
-      </h3>
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
-          <thead>
-            <tr class="bg-slate-100 border-b border-slate-300">
-              <th class="px-3 py-2 text-left font-semibold text-slate-800">Órgão</th>
-              <th class="px-3 py-2 text-left font-semibold text-slate-800">Pessoas na fila</th>
-            </tr>
-          </thead>
-          <tbody id="tbody-orgaos"></tbody>
-        </table>
-      </div>
-    </section>
   </main>
 
   <!-- ==========================
        FAQ
   =========================== -->
-  <section id="faq" class="py-8">
+  <section id="faq" class="bg-white border-t border-b border-slate-300 py-10">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="bg-white rounded-2xl border border-slate-300 shadow-sm p-6">
-        <h3 class="text-lg md:text-xl font-semibold text-slate-900 mb-4">
-          Dúvidas frequentes sobre doação de órgãos
-        </h3>
+      <h3 class="text-xl font-semibold text-slate-800 mb-4">Dúvidas frequentes</h3>
 
-        <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
-          <summary class="font-medium cursor-pointer text-slate-900">
-            Quem pode ser doador de órgãos no Brasil?
-          </summary>
-          <p class="mt-2 text-slate-800">
-            A doação pode ser feita em vida (em situações específicas, como doação de um rim)
-            ou após a morte encefálica, quando a pessoa falece em ambiente hospitalar. Em caso
-            de morte encefálica, a família é sempre consultada e precisa autorizar a doação.
-          </p>
-        </details>
+      <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
+        <summary class="font-medium cursor-pointer">Quem pode ser doador de órgãos?</summary>
+        <p class="mt-2 text-slate-700">
+          No Brasil, a doação pode ocorrer em vida ou após morte encefálica, sempre com autorização da família.
+        </p>
+      </details>
 
-        <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
-          <summary class="font-medium cursor-pointer text-slate-900">
-            Se eu quiser ser doador, o que devo fazer?
-          </summary>
-          <p class="mt-2 text-slate-800">
-            No Brasil, não existe mais registro em documento oficial. O mais importante é
-            conversar com a família em vida e deixar claro o seu desejo de doar.
-          </p>
-        </details>
+      <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
+        <summary class="font-medium cursor-pointer">Como declarar que quero ser doador?</summary>
+        <p class="mt-2 text-slate-700">
+          A forma válida é avisar sua família. Ela sempre será consultada.
+        </p>
+      </details>
 
-        <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
-          <summary class="font-medium cursor-pointer text-slate-900">
-            A doação de órgãos desfigura o corpo?
-          </summary>
-          <p class="mt-2 text-slate-800">
-            Não. A retirada dos órgãos é feita em centro cirúrgico e o corpo é recomposto,
-            permitindo velório normalmente.
-          </p>
-        </details>
-
-        <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
-          <summary class="font-medium cursor-pointer text-slate-900">
-            O que é taxa de recusa familiar?
-          </summary>
-          <p class="mt-2 text-slate-800">
-            É o percentual de vezes em que a família recusa a doação mesmo havendo um
-            potencial doador. Quanto menor a recusa, maior a chance de tirar pessoas da fila.
-          </p>
-        </details>
-      </div>
     </div>
   </section>
 
   <!-- ==========================
-       CONTEÚDO EDUCATIVO
+       EDUCATIVO
   =========================== -->
-  <section id="educativo" class="pb-10">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="bg-white rounded-2xl border border-slate-300 shadow-sm p-6 space-y-4">
-        <h3 class="text-lg md:text-xl font-semibold text-slate-900">
-          O papel da família na doação de órgãos
-        </h3>
-        <p class="text-sm md:text-base text-slate-800">
-          Na prática, quem decide sobre a doação de órgãos é a família. Mesmo que a pessoa tenha
-          falado em vida que gostaria de ser doadora, a autorização precisa ser registrada em
-          prontuário por um familiar em momento de grande carga emocional.
-        </p>
-        <p class="text-sm md:text-base text-slate-800">
-          Conversar sobre o assunto antes é fundamental. Quando a família já conhece a vontade da
-          pessoa, a decisão costuma ser mais tranquila e o medo de “errar” diminui.
-        </p>
-      </div>
-    </div>
+  <section id="educativo" class="max-w-6xl mx-auto px-4 py-10">
+    <h3 class="text-xl font-semibold text-slate-800 mb-3">O papel da família</h3>
+    <p class="text-slate-800 max-w-3xl">
+      A decisão da família é determinante na doação de órgãos. Uma conversa simples em vida
+      pode significar a diferença entre manter a vontade da pessoa e transformar vidas.
+    </p>
   </section>
 
   <!-- ==========================
        RODAPÉ
   =========================== -->
-  <footer class="border-t border-slate-400 py-6 text-center text-xs text-slate-800">
-    Projeto acadêmico – Transplantômetro Brasil • Dados ilustrativos
+  <footer class="border-t border-slate-400 py-6 text-center text-xs text-slate-700">
+    Projeto acadêmico – Transplantômetro Brasil
   </footer>
 
 </body>
