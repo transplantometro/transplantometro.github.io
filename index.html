@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transplantômetro Brasil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* COR DE FUNDO DO SITE */
+    body {
+      background-color: rgb(102, 255, 102); /* fundo verde 204 */
+    }
+
+    /* COR DO CABEÇALHO */
+    header {
+      background-color: rgb(0, 153, 255); /* azul */
+    }
+
+    .odometer-number {
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+
+<!-- tirei o bg-slate-50 daqui -->
+<body class="text-slate-900">
+
+  <!-- ==========================
+       CONFIG DOS DADOS
+  =========================== -->
+  <script>
+    const TRANSPLANT_DATA = {
+      ano: 2025,
+      totalTransplantesAno: 4826,
+      potenciaisDoadores: 7597,
+      doadoresEfetivos: 2069,
+      taxaRecusaFamiliar: 45,
+      orgaos: [
+        { nome: "Rim", fila: 38349 },
+        { nome: "Fígado", fila: 1482 },
+        { nome: "Coração", fila: 370 },
+        { nome: "Pulmão", fila: 197 },
+        { nome: "Pâncreas", fila: 20 },
+      ],
+    };
+
+    function animateNumber(element, target, duration = 1200) {
+      if (!element) return;
+      const start = 0;
+      const startTime = performance.now();
+      const formatter = new Intl.NumberFormat("pt-BR");
+
+      function frame(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.floor(start + (target - start) * eased);
+        element.textContent = formatter.format(value);
+        if (progress < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      animateNumber(document.getElementById("total-ano"), TRANSPLANT_DATA.totalTransplantesAno);
+      animateNumber(document.getElementById("potenciais-doadores"), TRANSPLANT_DATA.potenciaisDoadores);
+      animateNumber(document.getElementById("doadores-efetivos"), TRANSPLANT_DATA.doadoresEfetivos);
+
+      const recusaEl = document.getElementById("taxa-recusa");
+      if (recusaEl) {
+        const target = TRANSPLANT_DATA.taxaRecusaFamiliar;
+        const startTime = performance.now();
+        function frame(now) {
+          const progress = Math.min((now - startTime) / 1000, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = (target * eased).toFixed(1);
+          recusaEl.textContent = value.replace(".", ",") + " %";
+          if (progress < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      const tbody = document.getElementById("tbody-orgaos");
+      const formatter = new Intl.NumberFormat("pt-BR");
+      TRANSPLANT_DATA.orgaos.forEach((org) => {
+        const tr = document.createElement("tr");
+        tr.className = "border-b border-slate-200";
+        tr.innerHTML = `
+          <td class="px-3 py-2 font-medium">${org.nome}</td>
+          <td class="px-3 py-2">${formatter.format(org.fila)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById("ano-atual").textContent = TRANSPLANT_DATA.ano;
+    });
+  </script>
+
+  <!-- ==========================
+       HEADER
+  =========================== -->
+  <header class="border-b border-slate-300 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-800">
+          Transplantômetro Brasil
+        </h1>
+        <p class="text-sm text-slate-600">Painel público sobre fila de transplantes</p>
+      </div>
+
+      <nav class="hidden md:flex gap-4 text-sm text-slate-600">
+        <a href="#painel" class="hover:text-emerald-600">Painel</a>
+        <a href="#faq" class="hover:text-emerald-600">Dúvidas</a>
+        <a href="#educativo" class="hover:text-emerald-600">Conteúdo educativo</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================
+       HERO
+  =========================== -->
+  <section class="bg-gradient-to-br from-emerald-50 to-sky-50 border-b border-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10">
+      <h2 class="text-2xl md:text-3xl font-semibold text-slate-800 mb-3">
+        Números que contam histórias de vida
+      </h2>
+      <p class="text-slate-800 max-w-2xl">
+        Este painel apresenta, de forma simples, indicadores da doação de órgãos no Brasil.
+        Cada número representa pessoas, famílias e decisões difíceis — e mostra a importância
+        da conversa sobre doação.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================
+       PAINEL
+  =========================== -->
+  <main id="painel" class="max-w-6xl mx-auto px-4 py-10">
+
+    <!-- CARDS -->
+    <div class="grid gap-4 md:grid-cols-4">
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Transplantes no ano</p>
+        <p id="total-ano" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Potenciais doadores no ano</p>
+        <p id="potenciais-doadores" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Doadores efetivos</p>
+        <p id="doadores-efetivos" class="mt-2 text-3xl font-semibold text-slate-900 odometer-number">0</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow border border-slate-300 p-4">
+        <p class="text-xs text-slate-600 uppercase font-medium">Taxa de recusa familiar</p>
+        <p id="taxa-recusa" class="mt-2 text-3xl font-semibold text-slate-900">0 %</p>
+      </div>
+
+    </div>
+
+    <!-- Tabela -->
+    <section class="mt-10 bg-white rounded-2xl shadow border border-slate-300 p-4">
+      <h3 class="text-xl font-semibold text-slate-800 mb-3">Pessoas na fila por órgão</h3>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="bg-slate-100 border-b border-slate-300">
+            <th class="px-3 py-2 text-left font-semibold text-slate-700">Órgão</th>
+            <th class="px-3 py-2 text-left font-semibold text-slate-700">Pessoas na fila</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-orgaos"></tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- ==========================
+       FAQ
+  =========================== -->
+  <section id="faq" class="bg-white border-t border-b border-slate-300 py-10">
+    <div class="max-w-6xl mx-auto px-4">
+      <h3 class="text-xl font-semibold text-slate-800 mb-4">Dúvidas frequentes</h3>
+
+      <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
+        <summary class="font-medium cursor-pointer">Quem pode ser doador de órgãos?</summary>
+        <p class="mt-2 text-slate-700">
+          No Brasil, a doação pode ocorrer em vida ou após morte encefálica, sempre com autorização da família.
+        </p>
+      </details>
+
+      <details class="bg-slate-100 border border-slate-300 rounded-xl p-4 mb-3">
+        <summary class="font-medium cursor-pointer">Como declarar que quero ser doador?</summary>
+        <p class="mt-2 text-slate-700">
+          A forma válida é avisar sua família. Ela sempre será consultada.
+        </p>
+      </details>
+
+    </div>
+  </section>
+
+  <!-- ==========================
+       EDUCATIVO
+  =========================== -->
+  <section id="educativo" class="max-w-6xl mx-auto px-4 py-10">
+    <h3 class="text-xl font-semibold text-slate-800 mb-3">O papel da família</h3>
+    <p class="text-slate-800 max-w-3xl">
+      A decisão da família é determinante na doação de órgãos. Uma conversa simples em vida
+      pode significar a diferença entre manter a vontade da pessoa e transformar vidas.
+    </p>
+  </section>
+
+  <!-- ==========================
+       RODAPÉ
+  =========================== -->
+  <footer class="border-t border-slate-400 py-6 text-center text-xs text-slate-700">
+    Projeto acadêmico – Transplantômetro Brasil
+  </footer>
+
+</body>
+</html>
